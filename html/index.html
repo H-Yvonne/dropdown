@@ -1,0 +1,64 @@
+<html>
+<head>
+	<title>下拉联动</title>
+	<!-- <link rel="stylesheet" type="text/css" href="../src/css/common/base.css"> -->
+	<!-- <link rel="stylesheet" type="text/css" href="../src/css/common/common.css"> -->
+	<link rel="stylesheet" type="text/css" href="../src/css/index.css">
+</head>
+<body style="width: 400px; height: 400px;">
+<div class="test1">
+	<div class="dropdown-group" autosearch="true">
+		<a href="javascript:;" class="dropdown-toggle">
+			<input type="text" class="dropdown-input" name="" value="" />
+			<i class="dropdown-icon"></i>
+		</a>
+		<ul class="dropdown-list">
+			<li class="it">
+				<a href="javascript:;" class="dropdown-option" attr="111">你猜1</a>
+			</li>
+			<li class="it">
+				<a href="javascript:;" class="dropdown-option" attr="222">我是来测试的1</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="test2">
+	<div class="dropdown-group" autosearch="false">
+		<a href="javascript:;" class="dropdown-toggle">
+			<input type="text" class="dropdown-input" name="" value="" />
+			<i class="dropdown-icon"></i>
+		</a>
+		<ul class="dropdown-list">
+			<li class="it">
+				<a href="javascript:;" class="dropdown-option" attr="1111">你猜2</a>
+			</li>
+			<li class="it">
+				<a href="javascript:;" class="dropdown-option" attr="2222">我是来测试的2</a>
+			</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../src/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="../src/js/index.js"></script>
+<script type="text/javascript">
+(function(){
+	var test = dropDown({
+		$el : 'div.test1'
+	});
+	var test1 = dropDown({
+		$el : 'div.test2'
+	});
+
+	// console.log(test1 instanceof dropDown);
+	
+	test.on('change',function(a){
+		console.log(a);
+	});
+	// test1.on('change',function(a){
+	// 	console.log(a);
+	// });
+	// test.emit('changes','test');
+})();
+</script>
