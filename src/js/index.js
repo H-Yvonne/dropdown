@@ -132,7 +132,9 @@
 			_self.oldVal = $(_self.$input).val();
 			$(_self.$el).on('click',_self.$option,function(){
 				var values = $(this).html(),attr = $(this).attr('attr'),warp = $(this).parents('div.dropdown-group');
-				warp.find(_self.$input).val(values).attr('data-attr',attr);
+				warp.find(_self.$input).val(values);
+				warp.find('input.dropdown-attr').val(attr);
+				warp.find(_self.$btn).attr('title',values);
 				$(_self.$warp).removeClass(_self.$active);
 				_self.changeFn(values,warp,attr);
 			});
