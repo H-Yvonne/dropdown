@@ -2,15 +2,19 @@
  * @author H.Yvonne
  * @create 2015.8.27
  */
-(function(root,$,factory){
-	if(typeof define === 'function' && (define.cmd || define.amd)){
-		define(function(){
-			return factory(root,$);
-		});
-	} else {
-		root.dropDown = factory(root,$);
-	}
-})(window,$,function(root,$){
+(function(root, factory){
+	if (typeof exports === 'object') {
+        var $;
+        try { $ = require('./jquery.min'); } catch(e) {};
+        module.exports = factory($);
+    } else if (typeof define === 'function' && define.amd) {
+        define(['./jquery.min'], function ($) {
+            return (root.dropDown = factory($));
+        });
+    } else {
+        root.dropDown = factory(root.$);
+    }
+})(this, function($){
 	var pubsub = {
 		_handlers : '',
 		on : function(etype,handler){
@@ -47,6 +51,7 @@
 		$el : '',
 		$warp : 'div.dropdown-group',
 		$btn : 'a.dropdown-toggle',
+		$mask : 'div.dropdown-mask',
 		$input : 'input.dropdown-input',
 		$active : 'dropdown-active',
 		$option : 'a.dropdown-option'
@@ -69,6 +74,7 @@
 			var _self = this, warp = $(_self.$el).find(_self.$warp);
 			_self.flag = warp.attr('autosearch');
 			if(_self.flag === 'false'){
+				warp.find(_self.$mask).show();
 				warp.find(_self.$input).attr('disabled','disabled');
 			} else {
 				_self.autosearchFn();
@@ -95,6 +101,7 @@
 			var _self = this;
 			$(_self.$el).find(_self.$btn).unbind('click').bind('click',function(){
 				_self.show($(this));
+				if(_self.flag === 'false') return;
 				if(_self.flag === 'true' && _self.listData.length === 0){
 					_self.getList($(this));
 					return;
@@ -130,19 +137,19 @@
 		optionSel : function(){
 			var _self = this;
 			_self.oldVal = $(_self.$input).val();
-			$(_self.$el).on('click',_self.$option,function(){
+			$(_self.$el).unbind('click').on('click',_self.$option,function(){
 				var values = $(this).html(),attr = $(this).attr('attr'),warp = $(this).parents('div.dropdown-group');
 				warp.find(_self.$input).val(values);
 				warp.find('input.dropdown-attr').val(attr);
 				warp.find(_self.$btn).attr('title',values);
 				$(_self.$warp).removeClass(_self.$active);
-				_self.changeFn(values,warp,attr);
+				_self.changeFn(values,warp,$(this));
 			});
 		},
-		changeFn : function(values,obj,attr){
+		changeFn : function(values,obj,option){
 			var _self = this;
 			if(_self.oldVal !== values){
-				_self.emit('change',attr,obj);
+				_self.emit('change',obj,option);
 				_self.oldVal = values;
 				_self.doAction();
 			}

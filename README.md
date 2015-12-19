@@ -10,8 +10,10 @@ Example
 ```html
 <div class="test1">
 	<div class="dropdown-group" autosearch="true">
-		<a href="javascript:;" class="dropdown-toggle">
+		<a href="javascript:;" class="dropdown-toggle" title="">
+			<div class="dropdown-mask"></div>
 			<input type="text" class="dropdown-input" name="" value="" />
+			<input type="text" class="dropdown-attr" />
 			<i class="dropdown-icon"></i>
 		</a>
 		<ul class="dropdown-list">
@@ -28,7 +30,7 @@ Example
 引入样式文件，js文件
 ```
 <link rel="stylesheet" type="text/css" href="../src/css/index.css">
-<script type="text/javascript" src="../src/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="../src/js/jquery.min.js"></script>
 <script type="text/javascript" src="../src/js/index.js"></script>
 ```
 实现下拉
@@ -50,6 +52,6 @@ Example
 <pre><code>
 html代码段autosearch: 是否开启autosearch功能
 $el: 装载下拉的容器名（此处为.test1）
-绑定change事件，function返回2个参数: 下拉选项attr值以及当前操作的下拉dom
+绑定change事件，function返回2个参数: 当前操作的下拉dom以及选项dom
 </code></pre>
 
