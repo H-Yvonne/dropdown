@@ -54,7 +54,8 @@
 		$mask : 'div.dropdown-mask',
 		$input : 'input.dropdown-input',
 		$active : 'dropdown-active',
-		$option : 'a.dropdown-option'
+		$option : 'a.dropdown-option',
+		$callback : ''
 	});
 
 	$.extend(dropDown.prototype,pubsub,{
@@ -101,6 +102,7 @@
 			var _self = this;
 			$(_self.$el).find(_self.$btn).unbind('click').bind('click',function(){
 				_self.show($(this));
+				if(typeof _self.$callback === 'function') _self.$callback();
 				if(_self.flag === 'false') return;
 				if(_self.flag === 'true' && _self.listData.length === 0){
 					_self.getList($(this));
@@ -124,6 +126,7 @@
 		hide : function(){
 			var _self = this;
 			$('body').click(function(e){
+				if(typeof _self.$callback === 'function') _self.$callback();
 				var target = e.target;
 				if (!$(target).closest(_self.$warp).length){
 					$(_self.$warp).removeClass(_self.$active);
